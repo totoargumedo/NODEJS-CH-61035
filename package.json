@@ -1,0 +1,12 @@
+{
+  "name": "backendnodejs2024",
+  "version": "1.0.0",
+  "description": "practicas backend con nodejs coderhouse 2024",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "dev": "nodemon ./src/index.js"
+  },
+  "author": "Toto Argumedo",
+  "license": "ISC"
+}
