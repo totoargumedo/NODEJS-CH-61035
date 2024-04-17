@@ -21,6 +21,7 @@ const products = new ProductManager();
 ### Metodos
 
 **addProduct**
+
 Recibe un objeto con los campos:
 _title_: String,
 _description_: String,
@@ -45,6 +46,7 @@ products.addProduct({
 Agrega un elemento a memoria, agrega automaticamente el campo _id_ y devuelve el elemento creado.
 
 **getProductById**
+
 Recibe el id de un producto en formato _Number_
 
 ```
@@ -61,7 +63,8 @@ products.getProducts();
 
 Devuelve un arreglo con todos los elementos cargados en memoria
 
-\*_initExample_
+**initExample**
+
 Carga elementos precargados a la memoria
 
 ```
