@@ -1,6 +1,6 @@
 # PRACTICAS BACKEND MERN CODERHOUSE
 
-# Desafío 1
+# Desafío 2
 
 Clases ECMAScript y ECMAScript avanzado
 
