@@ -2,7 +2,8 @@
 
 # Desafío 2
 
-Clases ECMAScript y ECMAScript avanzado
+- Clases ECMAScript y ECMAScript avanzado
+- Manejo de archivos
 
 ## ProductManager
 
@@ -14,8 +15,11 @@ import ProductManager from "./constructor/products.js";
 
 ### Instanciar ProductManager
 
+Recibe el campo **filename** de tipo _String_ que funcionara como el nombre del archivo creado.
+Al instanciar, buscara el archivo con el nombre indicado, de no encontrarlo lo creára vacío.
+
 ```
-const products = new ProductManager();
+const products = new ProductManager(filename);
 ```
 
 ### Metodos
@@ -63,10 +67,26 @@ products.getProducts();
 
 Devuelve un arreglo con todos los elementos cargados en memoria
 
-**initExample**
+**updateProduct**
 
-Carga elementos precargados a la memoria
+Recibe el **id** de un producto en formato _Number_ como primer argumento.
+Recibe un _Object_ como segundo argumento con los campos a modificar del producto.
 
 ```
-products.initExample();
+products.updateProduct(4,{price: 5423, title: "Auriculares ASTRO A10 Menta"});
+```
+
+Puede recibir uno o todos los siguientes campos en el segundo argumento:
+_title_: String,
+_description_: String,
+_price_ Number,
+_thumbnail_: String,
+_code_: String (único),
+_stock_: Number
+
+**deleteProduct**
+Recibe el **id** de un producto en formato _Number_ y lo elimina del archivo.
+
+```
+products.deleteProduct(id);
 ```

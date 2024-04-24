@@ -1,4 +1,4 @@
-import ProductManager from "./constructor/products.js";
+import ProductManager from "./fs/products.js";
 
 const productExample1 = {
   title: "Auriculares ASTRO A30 Inalámbricos Blanco",
@@ -43,21 +43,28 @@ const productExample4 = {
   stock: 12,
 };
 
-console.log("----Inicio prueba de clases----");
+const products = new ProductManager("products");
 
-const products = new ProductManager();
-console.log("Cargando productos de ejemplo...");
-products.initExample();
-console.log("Carga de productos nuevos");
-console.log(products.addProduct(productExample1));
-console.log(products.addProduct(productExample2));
-console.log(products.addProduct(productExample3));
-console.log(products.addProduct(productExample4));
-console.log("Mostrando productos cargados...");
-console.log(products.getProducts());
-console.log("Busqueda de producto por ID 1");
-console.log(products.getProductById(1));
-console.log("Busqueda de producto por ID 15");
-console.log(products.getProductById(15));
+async function test() {
+  console.log("----Inicio prueba de clases----");
+  console.log("Carga de productos nuevos");
+  await products.addProduct(productExample1);
+  await products.addProduct(productExample2);
+  await products.addProduct(productExample3);
+  await products.addProduct(productExample4);
+  console.log("Mostrando productos cargados...");
+  console.log(products.getProducts());
+  console.log("Busqueda de producto por ID 1");
+  console.log(products.getProductById(1));
+  console.log("Busqueda de producto por ID 15");
+  console.log(products.getProductById(15));
+  console.log("Eliminando producto con ID 4");
+  await products.deleteProduct(3);
+  console.log("Modificando producto con ID 3");
+  await products.updateProduct(2, { price: 52222, stock: 43 });
+  console.log("Mostrando productos cargados...");
+  console.log(products.getProducts());
+  console.log("----Fin prueba de clases----");
+}
 
-console.log("----Fin prueba de clases----");
+test();
