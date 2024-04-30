@@ -1,9 +1,35 @@
 # PRACTICAS BACKEND MERN CODERHOUSE
 
-# Desafío 2
+# Desafío 3
 
 - Clases ECMAScript y ECMAScript avanzado
 - Manejo de archivos
+- Servidor Web Endpoints GET
+
+## Servidor
+
+### Iniciar Servidor
+
+```
+npm run start
+```
+
+### Endpoints
+
+**/products**
+
+Devuelve todos los productos cargados en archivo
+
+**/products?limit=4**
+
+Recibe _limit_ como query
+Devuelve los **4** primeros productos guardados en memoria
+
+**/products/:pid**
+**/products/4**
+
+Devuelve el producto con el _id_ especificado como parametro
+Devuelve el producto con _id_ **4**
 
 ## ProductManager
 
