@@ -7,17 +7,15 @@ class ProductManager {
     this.products = [];
     this.filename = filename;
     this.path = `./src/fs/data/${filename}.json`;
-    this.initialize();
   }
 
   //inicializador de archivo
-  async initialize() {
+  async read() {
     try {
       if (fs.existsSync(this.path)) {
         const data = await fs.promises.readFile(this.path, "utf-8");
         this.products = JSON.parse(data);
         this.#id = this.getMaxId();
-        console.log(`File ${this.filename} loaded`);
       } else {
         await this.save();
       }
@@ -46,6 +44,7 @@ class ProductManager {
   //agregar productos, agregar id incremental a cada producto
   async addProduct(product) {
     try {
+      await this.read();
       const verifyCode = this.products.find(
         (prod) => prod.code === product.code
       );
@@ -63,22 +62,33 @@ class ProductManager {
   }
 
   //devuelve todos los productos
-  getProducts() {
-    return this.products;
+  async getProducts() {
+    try {
+      await this.read();
+      return this.products;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   //devuelve un producto por id
-  getProductById(id) {
-    const productExist = this.products.find((product) => product.id == id);
-    if (!productExist) {
-      return { error: "Not found" };
+  async getProductById(id) {
+    try {
+      await this.read();
+      const productExist = this.products.find((product) => product.id == id);
+      if (!productExist) {
+        return { error: "Not found" };
+      }
+      return productExist;
+    } catch (error) {
+      console.log(error);
     }
-    return productExist;
   }
 
   //actualizar campo en producto
   async updateProduct(id, product) {
     try {
+      await this.read();
       const index = this.products.findIndex((product) => product.id == id);
       if (index === -1) {
         return { error: "Not found" };
@@ -94,6 +104,7 @@ class ProductManager {
   //eliminar producto por id
   async deleteProduct(id) {
     try {
+      await this.read();
       const index = this.products.findIndex((product) => product.id == id);
       if (index === -1) {
         return { error: "Not found" };

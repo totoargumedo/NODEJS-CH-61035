@@ -46,25 +46,29 @@ const productExample4 = {
 const products = new ProductManager("products");
 
 async function test() {
-  console.log("----Inicio prueba de clases----");
-  console.log("Carga de productos nuevos");
-  await products.addProduct(productExample1);
-  await products.addProduct(productExample2);
-  await products.addProduct(productExample3);
-  await products.addProduct(productExample4);
-  console.log("Mostrando productos cargados...");
-  console.log(products.getProducts());
-  console.log("Busqueda de producto por ID 1");
-  console.log(products.getProductById(1));
-  console.log("Busqueda de producto por ID 15");
-  console.log(products.getProductById(15));
-  console.log("Eliminando producto con ID 4");
-  await products.deleteProduct(3);
-  console.log("Modificando producto con ID 3");
-  await products.updateProduct(2, { price: 52222, stock: 43 });
-  console.log("Mostrando productos cargados...");
-  console.log(products.getProducts());
-  console.log("----Fin prueba de clases----");
+  try {
+    console.log("----Inicio prueba de clases----");
+    console.log("Carga de productos nuevos");
+    await products.addProduct(productExample1);
+    await products.addProduct(productExample2);
+    await products.addProduct(productExample3);
+    await products.addProduct(productExample4);
+    console.log("Mostrando productos cargados...");
+    console.log(await products.getProducts());
+    console.log("Busqueda de producto por ID 1");
+    console.log(await products.getProductById(1));
+    console.log("Busqueda de producto por ID 15");
+    console.log(await products.getProductById(15));
+    console.log("Eliminando producto con ID 4");
+    await products.deleteProduct(3);
+    console.log("Modificando producto con ID 3");
+    await products.updateProduct(2, { price: 52222, stock: 43 });
+    console.log("Mostrando productos cargados...");
+    console.log(await products.getProducts());
+    console.log("----Fin prueba de clases----");
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 test();
