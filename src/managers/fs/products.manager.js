@@ -1,12 +1,11 @@
 import fs from "fs";
+import { v4 as uuidv4 } from "uuid";
 
 class ProductManager {
-  #id = 0;
-
   constructor(filename) {
     this.products = [];
     this.filename = filename;
-    this.path = `./src/fs/data/${filename}.json`;
+    this.path = `./src/managers/fs/data/${filename}.json`;
   }
 
   //inicializador de archivo
@@ -15,7 +14,7 @@ class ProductManager {
       if (fs.existsSync(this.path)) {
         const data = await fs.promises.readFile(this.path, "utf-8");
         this.products = JSON.parse(data);
-        this.#id = this.getMaxId();
+        // this.#id = this.getMaxId();
       } else {
         await this.save();
       }
@@ -32,14 +31,15 @@ class ProductManager {
     }
   }
 
-  //obtener el id mas alto de los elementos almacenados
-  getMaxId() {
-    const maxId = this.products.reduce(
-      (acc, prod) => (prod.id > acc ? prod.id : acc),
-      0
-    );
-    return maxId;
-  }
+  //se cambia generador de id por uuid
+  // //obtener el id mas alto de los elementos almacenados
+  // getMaxId() {
+  //   const maxId = this.products.reduce(
+  //     (acc, prod) => (prod.id > acc ? prod.id : acc),
+  //     0
+  //   );
+  //   return maxId;
+  // }
 
   //agregar productos, agregar id incremental a cada producto
   async addProduct(product) {
@@ -51,8 +51,7 @@ class ProductManager {
       if (verifyCode) {
         return { error: "Product code already exists" };
       }
-      this.#id++;
-      const newProduct = { id: this.#id, ...product };
+      const newProduct = { id: uuidv4(), ...product };
       this.products.push(newProduct);
       await this.save();
       return newProduct;

@@ -1,10 +1,11 @@
 # PRACTICAS BACKEND MERN CODERHOUSE
 
-# Desafío 3
+# Desafío 4
 
 - Clases ECMAScript y ECMAScript avanzado
 - Manejo de archivos
 - Servidor Web Endpoints GET
+- CRUD de productos con Router y Multer
 
 ## Servidor
 
@@ -53,12 +54,13 @@ const products = new ProductManager(filename);
 **addProduct**
 
 Recibe un objeto con los campos:
-_title_: String,
-_description_: String,
-_price_ Number,
-_thumbnail_: String,
-_code_: String (único),
-_stock_: Number
+_title_: String (obligatorio),
+_description_: String (obligatorio),
+_price_ Number (obligatorio),
+_thumbnails_: Array,
+_code_: String (obligatorio, único),
+_stock_: Number (obligatorio),
+_category_: String (obligatorio),
 
 ```
 products.addProduct({
@@ -66,10 +68,10 @@ products.addProduct({
       description:
         "Auriculares con cable para gaming para Xbox Series X|S, PlayStation 5, Switch, PC / MAC y más",
       price: 52500,
-      thumbnail:
-        "https://resource.astrogaming.com/w_386,ar_1.0,c_limit,f_auto,q_auto,dpr_2.0/d_transparent.gif/content/dam/astro/en/products/a10-gen-2/pdp-gallery-a10-gray-01-new.png?v=1",
+      thumbnails: ["https://resource.astrogaming.com/w_386,ar_1.0,c_limit,f_auto,q_auto,dpr_2.0/d_transparent.gif/content/dam/astro/en/products/a10-gen-2/pdp-gallery-a10-gray-01-new.png?v=1"],
       code: "A10M",
       stock: 16,
+      category: "Inalámbricos"
     });
 ```
 
@@ -106,9 +108,10 @@ Puede recibir uno o todos los siguientes campos en el segundo argumento:
 _title_: String,
 _description_: String,
 _price_ Number,
-_thumbnail_: String,
+_thumbnails_: Array,
 _code_: String (único),
-_stock_: Number
+_stock_: Number,
+_category_: String
 
 **deleteProduct**
 Recibe el **id** de un producto en formato _Number_ y lo elimina del archivo.
