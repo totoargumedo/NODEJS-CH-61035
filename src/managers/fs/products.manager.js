@@ -88,6 +88,14 @@ class ProductManager {
   async updateProduct(id, product) {
     try {
       await this.read();
+      //Verificar si el codigo ya existe
+      const verifyCode = this.products.find(
+        (prod) => prod.code === product.code
+      );
+      if (verifyCode) {
+        return { error: "Product code already exists" };
+      }
+      //Busqueda por id
       const index = this.products.findIndex((product) => product.id == id);
       if (index === -1) {
         return { error: "Not found" };
@@ -110,7 +118,7 @@ class ProductManager {
       }
       this.products.splice(index, 1);
       await this.save();
-      return { success: "Product deleted" };
+      return "Product deleted";
     } catch (error) {
       console.log(error);
     }
