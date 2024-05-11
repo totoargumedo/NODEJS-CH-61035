@@ -1,12 +1,11 @@
 import fs from "fs";
+import { v4 as uuidv4 } from "uuid";
 
 class ProductManager {
-  #id = 0;
-
   constructor(filename) {
     this.products = [];
     this.filename = filename;
-    this.path = `./src/fs/data/${filename}.json`;
+    this.path = `./src/managers/fs/data/${filename}.json`;
   }
 
   //inicializador de archivo
@@ -15,12 +14,12 @@ class ProductManager {
       if (fs.existsSync(this.path)) {
         const data = await fs.promises.readFile(this.path, "utf-8");
         this.products = JSON.parse(data);
-        this.#id = this.getMaxId();
+        // this.#id = this.getMaxId();
       } else {
         await this.save();
       }
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -28,17 +27,8 @@ class ProductManager {
     try {
       await fs.promises.writeFile(this.path, JSON.stringify(this.products));
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
-  }
-
-  //obtener el id mas alto de los elementos almacenados
-  getMaxId() {
-    const maxId = this.products.reduce(
-      (acc, prod) => (prod.id > acc ? prod.id : acc),
-      0
-    );
-    return maxId;
   }
 
   //agregar productos, agregar id incremental a cada producto
@@ -51,13 +41,12 @@ class ProductManager {
       if (verifyCode) {
         return { error: "Product code already exists" };
       }
-      this.#id++;
-      const newProduct = { id: this.#id, ...product };
+      const newProduct = { id: uuidv4(), ...product };
       this.products.push(newProduct);
       await this.save();
       return newProduct;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -67,7 +56,7 @@ class ProductManager {
       await this.read();
       return this.products;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -81,7 +70,7 @@ class ProductManager {
       }
       return productExist;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -89,6 +78,14 @@ class ProductManager {
   async updateProduct(id, product) {
     try {
       await this.read();
+      //Verificar si el codigo ya existe
+      const verifyCode = this.products.find(
+        (prod) => prod.code === product.code
+      );
+      if (verifyCode) {
+        return { error: "Product code already exists" };
+      }
+      //Busqueda por id
       const index = this.products.findIndex((product) => product.id == id);
       if (index === -1) {
         return { error: "Not found" };
@@ -97,7 +94,7 @@ class ProductManager {
       await this.save();
       return this.products[index];
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -111,9 +108,9 @@ class ProductManager {
       }
       this.products.splice(index, 1);
       await this.save();
-      return { success: "Product deleted" };
+      return "Product deleted";
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 }

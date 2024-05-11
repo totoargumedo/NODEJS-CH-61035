@@ -1,3 +1,3 @@
-import ProductManager from "../fs/products.js";
+import ProductManager from "../managers/fs/products.manager.js";
 
 export const products = new ProductManager("products");
