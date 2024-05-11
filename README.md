@@ -109,10 +109,12 @@ Recibe por parametro el _id_ de un carrito y lo elimina de la memoria.
 
 **/api/carts/:cid/product/:pid**
 **/api/carts/4/product/14**
+**/api/carts/4/product/14?quantity=13**
 
-Elimina el _objeto_ del array de productos del carrito especificado por _id_ en los parametros con los siguientes campos:
+Elimina la cantidad esecificada en **quantity** del _objeto_ del array de productos del carrito especificado por _id_ en los parametros con los siguientes campos:
 Devuelve el carrito actualizado con el _id_ especificado como parametro
-Elimina el producto con _id_ 14 del carrito con _id_ **4**
+Elimina la cantidad especificada (o 1 por defecto) del producto con _id_ 14 del carrito con _id_ **4**
+_Si la cantidad enviada es mayor a la existente el producto se elimina. Cantidad es igual a 1 por defecto_
 
 ## ProductManager
 
@@ -273,12 +275,14 @@ Si el producto ya existe, se suma la cantidad indicada o 1 en por defecto.
 **removeProductFromCart**
 Recibe el _id_ de un carrito en formato _Number_ como primer argumento.
 Recibe el _id_ de un producto en formato _Number_ como segundo argumento.
+Recibe _quantity_ o cantidad del producto a eliminar.
+_Si la cantidad enviada es mayor a la existente el producto se elimina. Cantidad es igual a 1 por defecto_
 
 ```
-carts.removeProductFromCart(4,3);
+carts.removeProductFromCart(4,3,3);
 ```
 
-Elimina el **producto** con _id 3_ al arreglo de productos del carrito con _id 4_
+Elimina **3** unidades del **producto** con _id 3_ al arreglo de productos del carrito con _id 4_
 
 **deleteCart**
 Recibe el **id** de un carrito en formato _Number_ y lo elimina de la memoria.
