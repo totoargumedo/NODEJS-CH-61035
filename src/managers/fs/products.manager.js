@@ -19,7 +19,7 @@ class ProductManager {
         await this.save();
       }
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -27,19 +27,9 @@ class ProductManager {
     try {
       await fs.promises.writeFile(this.path, JSON.stringify(this.products));
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
-
-  //se cambia generador de id por uuid
-  // //obtener el id mas alto de los elementos almacenados
-  // getMaxId() {
-  //   const maxId = this.products.reduce(
-  //     (acc, prod) => (prod.id > acc ? prod.id : acc),
-  //     0
-  //   );
-  //   return maxId;
-  // }
 
   //agregar productos, agregar id incremental a cada producto
   async addProduct(product) {
@@ -56,7 +46,7 @@ class ProductManager {
       await this.save();
       return newProduct;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -66,7 +56,7 @@ class ProductManager {
       await this.read();
       return this.products;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -80,7 +70,7 @@ class ProductManager {
       }
       return productExist;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -104,7 +94,7 @@ class ProductManager {
       await this.save();
       return this.products[index];
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -120,7 +110,7 @@ class ProductManager {
       await this.save();
       return "Product deleted";
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 }

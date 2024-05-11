@@ -18,7 +18,7 @@ class CartManager {
         await this.save();
       }
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -26,7 +26,7 @@ class CartManager {
     try {
       await fs.promises.writeFile(this.path, JSON.stringify(this.carts));
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -38,7 +38,7 @@ class CartManager {
       await this.save();
       return newCart;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -48,7 +48,7 @@ class CartManager {
       await this.read();
       return this.carts;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -62,7 +62,7 @@ class CartManager {
       }
       return cartExists;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -85,7 +85,7 @@ class CartManager {
       await this.save();
       return cartExists;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -110,7 +110,7 @@ class CartManager {
       await this.save();
       return cartExist;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -126,7 +126,7 @@ class CartManager {
       await this.save();
       return { success: "Cart deleted" };
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 }
