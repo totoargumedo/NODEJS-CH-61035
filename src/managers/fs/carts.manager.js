@@ -89,25 +89,26 @@ class CartManager {
     }
   }
 
-  //Quitar producto del carrito
-  async removeProductFromCart(cid, pid) {
+  //Restar cantidad de productos o eliminar productos del carrito
+  async removeProductFromCart(cid, pid, quantity = 1) {
     try {
       await this.read();
       //buscar carrito
-      const cartExists = this.carts.find((cart) => cart.id === cid);
-      if (!cartExists) {
-        return { error: "Cart not found" };
-      }
+      const cartExist = this.carts.find((cart) => cart.id === cid);
+      if (!cartExist) return { error: "Cart not found" };
       //buscar producto en carrito
-      const productExists = cartExists.products.find((prod) => prod.id === pid);
-      if (!productExists) {
-        return { error: "Product not found" };
+      const productExist = cartExist.products.find((prod) => prod.id === pid);
+      if (!productExist) return { error: "Product not found in cart" };
+      //restar cantidad de productos
+      if (productExist.quantity <= quantity) {
+        cartExist.products = cartExist.products.filter(
+          (prod) => prod.id !== pid
+        );
+      } else {
+        productExist.quantity -= quantity;
       }
-      cartExists.products = cartExists.products.filter(
-        (prod) => prod.id !== pid
-      );
       await this.save();
-      return cartExists;
+      return cartExist;
     } catch (error) {
       console.log(error);
     }

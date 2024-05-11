@@ -70,7 +70,8 @@ cartsRouter.post("/:cid/product/:pid", async (req, res, next) => {
 cartsRouter.delete("/:cid/product/:pid", async (req, res, next) => {
   try {
     const { cid, pid } = req.params;
-    const cartUpdated = await carts.removeProductFromCart(cid, pid);
+    const { quantity } = req.query;
+    const cartUpdated = await carts.removeProductFromCart(cid, pid, quantity);
     if (cartUpdated.error) {
       return res.status(404).json({ status: "error", data: cartUpdated.error });
     }
