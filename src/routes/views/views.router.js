@@ -8,7 +8,10 @@ const viewsRouter = Router();
 viewsRouter.get("/", async (req, res, next) => {
   try {
     const productsAll = await products.getProducts();
-    res.status(200).render("products", { products: productsAll });
+    res.status(200).render("home", {
+      active: productsAll[0],
+      products: productsAll.slice(1, 4),
+    });
   } catch (error) {
     next(error);
   }
