@@ -1,41 +1,16 @@
 import { Router } from "express";
-import { carts } from "../../instances/carts.js";
+import * as cartsControllers from "../../controllers/carts.controller.js";
 
 const cartsRouter = Router();
 
 //Devuelve todos los productos
-cartsRouter.get("/", async (req, res, next) => {
-  try {
-    const cartsAll = await carts.getCarts();
-    res.status(200).json({ status: "success", data: cartsAll });
-  } catch (error) {
-    next(error);
-  }
-});
+cartsRouter.get("/", cartsControllers.getAll);
 
 //Crear carrito
-cartsRouter.post("/", async (req, res, next) => {
-  try {
-    const newCart = await carts.newCart();
-    res.status(201).json({ status: "success", data: newCart });
-  } catch (error) {
-    next(error);
-  }
-});
+cartsRouter.post("/", cartsControllers.create);
 
 //Devuelve producto por id
-cartsRouter.get("/:cid", async (req, res, next) => {
-  try {
-    const { cid } = req.params;
-    const cartFound = await carts.getCartById(cid);
-    if (cartFound.error) {
-      return res.status(404).json({ status: "error", data: cartFound.error });
-    }
-    res.status(200).json({ status: "success", data: cartFound });
-  } catch (error) {
-    next(error);
-  }
-});
+cartsRouter.get("/:cid", cartsControllers.getById);
 
 //Crear nuevo producto
 cartsRouter.post("/", async (req, res, next) => {
@@ -82,17 +57,6 @@ cartsRouter.delete("/:cid/product/:pid", async (req, res, next) => {
 });
 
 //Eliminar carrito
-cartsRouter.delete("/:cid", async (req, res, next) => {
-  try {
-    const { cid } = req.params;
-    const cartDeleted = await carts.deleteCart(cid);
-    if (cartDeleted.error) {
-      return res.status(404).json({ status: "error", data: cartDeleted.error });
-    }
-    res.status(200).json({ status: "success", data: cartDeleted });
-  } catch (error) {
-    next(error);
-  }
-});
+cartsRouter.delete("/:cid", cartsControllers.remove);
 
 export default cartsRouter;

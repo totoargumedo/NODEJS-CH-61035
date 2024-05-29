@@ -21,7 +21,7 @@ function renderProducts(products) {
       statusText = "No disponible";
     }
     newRow.innerHTML = `
-              <th scope="row">${product.id}</th>
+              <th scope="row">${product._id || product.id}</th>
               <td><img
                     class="rounded object-fit-cover"
                     src="${product.thumbnails[0]}"
@@ -35,7 +35,9 @@ function renderProducts(products) {
               <td class="text-${statusColor}">${statusText}</td>
               <td>${product.category}</td>
               <td><strong>${product.stock}</strong></td>
-              <td><button class="btn" id=${product.id} name=${product.title} onclick="deleteProduct(this);">❌</button></td>`;
+              <td><button class="btn" id=${product._id || product.id} name=${
+      product.title
+    } onclick="deleteProduct(this);">❌</button></td>`;
     table.appendChild(newRow);
   });
 }
@@ -172,7 +174,7 @@ function deleteProduct(element) {
     denyButtonText: `No borrar`,
   }).then((result) => {
     if (result.isConfirmed) {
-      fetch(`/api/products/${element.id}`, {
+      fetch(`/api/products/${element._id || element.id}`, {
         method: "DELETE",
       })
         .then((res) => {

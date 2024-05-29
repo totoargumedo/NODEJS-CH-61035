@@ -1,4 +1,6 @@
 // Numero de puerto en el que se ejecutara el servidor
 PORT = 8080
 // URL de coneccion a la base de datos MONGODB Atlas o local
-MONGODB_CONNECTION = mongodb://localhost:27017
+MONGODB_CONNECTION_URI = mongodb://localhost:27017
+// MONGODB para usar la base de datos MONGODB o FS para usar la base de datos FileSystem
+PERSISTENCE = "MONGODB"
