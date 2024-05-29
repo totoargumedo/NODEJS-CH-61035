@@ -67,7 +67,7 @@ class CartDaoFS {
   }
 
   //Agregar o sumar productos a un carrito por id
-  async addProductsToCart(cid, pid, quantity = 1) {
+  async addProductsToCart(cid, pid, quantity) {
     try {
       await this.read();
       //buscar carrito

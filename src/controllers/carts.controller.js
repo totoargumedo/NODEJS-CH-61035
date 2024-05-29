@@ -44,3 +44,39 @@ export const remove = async (req, res, next) => {
     next(error);
   }
 };
+
+export const addProductsToCart = async (req, res, next) => {
+  try {
+    const { cid, pid } = req.params;
+    const { quantity } = req.query;
+    const cartUpdated = await cartsServices.addProductsToCart(
+      cid,
+      pid,
+      quantity
+    );
+    if (cartUpdated.error) {
+      return res.status(400).json({ status: "error", data: cartUpdated.error });
+    }
+    return res.status(201).json({ status: "success", data: cartUpdated });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const removeProductsInCart = async (req, res, next) => {
+  try {
+    const { cid, pid } = req.params;
+    const { quantity } = req.query;
+    const cartUpdated = await cartsServices.removeProductsInCart(
+      cid,
+      pid,
+      quantity
+    );
+    if (cartUpdated.error) {
+      return res.status(400).json({ status: "error", data: cartUpdated.error });
+    }
+    return res.status(201).json({ status: "success", data: cartUpdated });
+  } catch (error) {
+    next(error);
+  }
+};
