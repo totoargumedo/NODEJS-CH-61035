@@ -53,12 +53,12 @@ socketServer.on("connection", async (socket) => {
   socketServer.emit("productsAll", await productsServices.getAll());
 
   socket.on("newProduct", async (data) => {
-    socketServer.emit("newProductToast", data);
+    socket.broadcast.emit("newProductToast", data);
     socketServer.emit("productsAll", await productsServices.getAll());
   });
 
   socket.on("productDeleted", async (data) => {
-    socketServer.emit("productDeletedToast", data);
+    socket.broadcast.emit("productDeletedToast", data);
     socketServer.emit("productsAll", await productsServices.getAll());
   });
 
@@ -68,6 +68,10 @@ socketServer.on("connection", async (socket) => {
   socket.on("newMessage", async (data) => {
     await messagesServices.create(data);
     socketServer.emit("messages", await messagesServices.getAll());
+  });
+
+  socket.on("newUser", (user) => {
+    socket.broadcast.emit("newUser", user);
   });
 
   socket.on("disconnect", () => {
