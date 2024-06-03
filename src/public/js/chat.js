@@ -8,7 +8,6 @@ if (!username) {
     title: "Bienvenido/a al chat!",
     input: "Ingresa tu nombre de usuario:",
     input: "email",
-    showCancelButton: true,
     inputValidator: (value) => {
       if (!value) {
         return "Debes ingresar un nombre de usuario!";
