@@ -1,6 +1,6 @@
 # PRACTICAS BACKEND MERN CODERHOUSE
 
-# Desafío 6
+# Desafío 7
 
 - Clases ECMAScript y ECMAScript avanzado
 - Manejo de archivos
@@ -9,6 +9,7 @@
 - CRUD de carritos con Router y FS
 - Motor de plantillas y Websocket
 - DAOs, Persistencia en Mongo, chat Websockets y separación de responsabilidades
+- Mejoras en los endpoints y pantallas
 
 ## Servidor
 
