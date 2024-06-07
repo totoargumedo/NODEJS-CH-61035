@@ -1,0 +1,171 @@
+<div>
+  <form
+    action=""
+    class="bg-dark p-5 rounded"
+    data-bs-theme="dark"
+    id="productForm"
+  >
+    <legend class="text-secondary mb-5 text-center">Carga de productos nuevos</legend>
+    <div class="container-fluid row">
+      <div class="col-md-4 mb-3">
+        <label for="title" class="form-label text-secondary">Nombre Producto</label>
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Sable de luz chingon"
+            aria-label="title"
+            name="title"
+            id="title"
+            required
+          />
+
+        </div>
+      </div>
+
+      <div class="col-md-8 mb-3">
+        <label for="description" class="form-label text-secondary">Descripción
+          detallada</label>
+        <div class="input-group">
+          <input
+            type="textarea"
+            class="form-control"
+            placeholder="Todas las ventajas que vas a tener de comprar este producto"
+            aria-label="description"
+            name="description"
+            id="description"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <label for="price" class="form-label text-secondary">Precio</label>
+        <div class="input-group">
+          <span class="input-group-text">$</span>
+          <input
+            type="number"
+            class="form-control"
+            aria-label="Precio"
+            id="price"
+            name="price"
+            min="1"
+            required
+          />
+          <span class="input-group-text">.00</span>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <label for="code" class="form-label text-secondary">Codigo unico</label>
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="ASD123DSA"
+            aria-label="code"
+            name="code"
+            id="code"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <label for="stock" class="form-label text-secondary">Stock</label>
+        <div class="input-group">
+          <input
+            type="number"
+            class="form-control"
+            aria-label="Stock"
+            id="stock"
+            name="stock"
+            min="1"
+            required
+          />
+          <span class="input-group-text">unidades</span>
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <label
+          for="category"
+          class="form-label text-secondary text-secondary"
+        >Categoría</label>
+        <div class="input-group">
+          <select
+            class="form-select"
+            aria-label="Categoria"
+            name="category"
+            id="category"
+            required
+          >
+            <option selected>Selecciona facción</option>
+            <option value="Jedi">Jedi</option>
+            <option value="Sith">Sith</option>
+            <option value="Force sensitive">Sensible a la fuerza</option>
+            <option value="Independent">Independiente</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-md-8 mb-3" id="productImages">
+        <label
+          for="thumbnails1"
+          class="form-label text-secondary text-secondary"
+        >Imagenes</label>
+        <div class="form-text">Puedes ingresar mas imagenes presionando el +</div>
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            name="thumbnails1"
+            id="thumbnails1"
+          />
+          <button
+            type="button"
+            class="btn btn-success"
+            onclick="addImageInput()"
+          >+</button>
+        </div>
+      </div>
+      <div class="col-md-3 d-flex justify-content-center align-items-center">
+        <input
+          type="submit"
+          class="btn btn-secondary"
+          name="productSubmit"
+          id="productSubmit"
+          value="Cargar"
+          style="height: 60px;width: 120px;"
+        />
+      </div>
+    </div>
+  </form>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Miniatura</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Descripción</th>
+      <th scope="col">Código</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Status</th>
+      <th scope="col">Categoría</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Eliminar</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  </tbody>
+</table>
+<script src="/socket.io/socket.io.js" charset="utf-8"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/toastify-js"
+></script>
+<script src="/js/realtimeproducts.js" charset="utf-8"></script>

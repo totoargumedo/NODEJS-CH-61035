@@ -1,0 +1,21 @@
+<div class="d-flex align-items-center justify-content-center">
+  <div class="card text-bg-dark mb-3" style="max-width: 540px;">
+    <img
+      src={{productOne.thumbnails}}
+      class="card-img img-fluid rounded-start h-100 object-fit-cover"
+      alt={{productOne.title}}
+    />
+    <div class="card-img-overlay">
+      <h5 class="card-title">{{productOne.title}}</h5>
+      <p class="card-text">{{productOne.description}}</p>
+      <p class="card-text"><small>{{productOne.category}}</small></p>
+      <a
+        href="/cart"
+        class="btn btn-success"
+        tabindex="-1"
+        role="button"
+        aria-disabled="true"
+      >Comprar</a>
+    </div>
+  </div>
+</div>

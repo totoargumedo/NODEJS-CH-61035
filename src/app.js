@@ -4,6 +4,10 @@ import morgan from "morgan";
 import { __dirname } from "./utils.js";
 import router from "./routes/index.router.js";
 import { errorHandler } from "./middlewares/error.handler.js";
+import handlebars from "express-handlebars";
+import { notFoundHandler } from "./middlewares/notFound.handler.js";
+import { Server } from "socket.io";
+import { products } from "./instances/products.js";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -11,15 +15,46 @@ const PORT = process.env.PORT || 8080;
 //MIDDLEWARES
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(errorHandler);
 app.use(morgan("dev"));
 
 //ROUTERS
 app.use(express.static(__dirname + "/public"));
 app.use("/", router);
 
+//RENDER ENGINE
+app.engine("handlebars", handlebars.engine());
+app.set("views", __dirname + "/views");
+app.set("view engine", "handlebars");
+
+//MIDDLEWARES 2
+app.use(notFoundHandler);
+app.use(errorHandler);
+
 //INICIALIZAR SERVIDOR
 
-app.listen(PORT, () => {
-  console.log("Server running on port " + PORT + "...");
+const httpServer = app.listen(PORT, () => {
+  console.log("🚀 Server running on port " + PORT + "...");
+});
+
+//SOCKET SERVER
+export const socketServer = new Server(httpServer);
+
+socketServer.on("connection", async (socket) => {
+  console.log("🟢 New connection: " + socket.id);
+
+  socketServer.emit("productsAll", await products.getProducts());
+
+  socket.on("newProduct", async (data) => {
+    socketServer.emit("newProductToast", data);
+    socketServer.emit("productsAll", await products.getProducts());
+  });
+
+  socket.on("productDeleted", async (data) => {
+    socketServer.emit("productDeletedToast", data);
+    socketServer.emit("productsAll", await products.getProducts());
+  });
+
+  socket.on("disconnect", () => {
+    console.log("🔴 User disconnected: " + socket.id);
+  });
 });

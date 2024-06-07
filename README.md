@@ -1,12 +1,13 @@
 # PRACTICAS BACKEND MERN CODERHOUSE
 
-# Desafío 4
+# Desafío 5
 
 - Clases ECMAScript y ECMAScript avanzado
 - Manejo de archivos
 - Servidor Web Endpoints GET
 - CRUD de productos con Router, FS y Multer
 - CRUD de carritos con Router y FS
+- Motor de plantillas y Websocket
 
 ## Servidor
 
@@ -15,6 +16,27 @@
 ```
 npm run start
 ```
+
+## Vistas
+
+### Home
+
+**/**
+Muestra una pequeña bienvenida
+
+### Productos
+
+**/products**
+
+Muestra todos los productos cargados en persistencia
+
+### Carga de productos
+
+**/products/realtimeproducts**
+
+Muestra una lista de los productos cargados y un formulario para carga de nuevos productos.
+Esta vista trabaja con Websockets para actualizar en tiempo real el listado de productos.
+También avisa si se agregaron productos nuevos o se eliminaron.
 
 ## Endpoints Productos
 
