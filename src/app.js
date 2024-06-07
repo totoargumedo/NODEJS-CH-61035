@@ -1,5 +1,6 @@
 import express from "express";
 import "dotenv/config";
+import { initMongo } from "./dao/mongo/connection.js";
 import morgan from "morgan";
 import { __dirname } from "./utils.js";
 import router from "./routes/index.router.js";
@@ -7,7 +8,8 @@ import { errorHandler } from "./middlewares/error.handler.js";
 import handlebars from "express-handlebars";
 import { notFoundHandler } from "./middlewares/notFound.handler.js";
 import { Server } from "socket.io";
-import { products } from "./instances/products.js";
+import * as productsServices from "./services/products.services.js";
+import * as messagesServices from "./services/messages.services.js";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -30,6 +32,11 @@ app.set("view engine", "handlebars");
 app.use(notFoundHandler);
 app.use(errorHandler);
 
+//PERSISTENCIA
+if (process.env.PERSISTENCE === "MONGODB") {
+  initMongo();
+}
+
 //INICIALIZAR SERVIDOR
 
 const httpServer = app.listen(PORT, () => {
@@ -42,16 +49,29 @@ export const socketServer = new Server(httpServer);
 socketServer.on("connection", async (socket) => {
   console.log("🟢 New connection: " + socket.id);
 
-  socketServer.emit("productsAll", await products.getProducts());
+  //Products sockets
+  socketServer.emit("productsAll", await productsServices.getAll());
 
   socket.on("newProduct", async (data) => {
-    socketServer.emit("newProductToast", data);
-    socketServer.emit("productsAll", await products.getProducts());
+    socket.broadcast.emit("newProductToast", data);
+    socketServer.emit("productsAll", await productsServices.getAll());
   });
 
   socket.on("productDeleted", async (data) => {
-    socketServer.emit("productDeletedToast", data);
-    socketServer.emit("productsAll", await products.getProducts());
+    socket.broadcast.emit("productDeletedToast", data);
+    socketServer.emit("productsAll", await productsServices.getAll());
+  });
+
+  //Messages sockets
+  socketServer.emit("messages", await messagesServices.getAll());
+
+  socket.on("newMessage", async (data) => {
+    await messagesServices.create(data);
+    socketServer.emit("messages", await messagesServices.getAll());
+  });
+
+  socket.on("newUser", (user) => {
+    socket.broadcast.emit("newUser", user);
   });
 
   socket.on("disconnect", () => {

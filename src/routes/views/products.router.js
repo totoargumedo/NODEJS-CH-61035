@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { products } from "../../instances/products.js";
+import * as productsServices from "../../services/products.services.js";
 
 const productRouter = Router();
 
 productRouter.get("/", async (req, res, next) => {
   try {
-    const productsAll = await products.getProducts();
+    const productsAll = await productsServices.getAll();
     res.render("products", { products: productsAll });
   } catch (error) {
     next(error);
@@ -23,7 +23,7 @@ productRouter.get("/realtimeproducts", async (req, res, next) => {
 productRouter.get("/:pid", async (req, res, next) => {
   try {
     const { pid } = req.params;
-    const productOne = await products.getProductById(pid);
+    const productOne = await productsServices.getById(pid);
     res.render("product", { productOne });
   } catch (error) {
     next(error);

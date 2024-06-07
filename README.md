@@ -1,6 +1,6 @@
 # PRACTICAS BACKEND MERN CODERHOUSE
 
-# Desafío 5
+# Desafío 6
 
 - Clases ECMAScript y ECMAScript avanzado
 - Manejo de archivos
@@ -8,6 +8,7 @@
 - CRUD de productos con Router, FS y Multer
 - CRUD de carritos con Router y FS
 - Motor de plantillas y Websocket
+- DAOs, Persistencia en Mongo, chat Websockets y separación de responsabilidades
 
 ## Servidor
 
@@ -37,6 +38,12 @@ Muestra todos los productos cargados en persistencia
 Muestra una lista de los productos cargados y un formulario para carga de nuevos productos.
 Esta vista trabaja con Websockets para actualizar en tiempo real el listado de productos.
 También avisa si se agregaron productos nuevos o se eliminaron.
+
+### Chat en vivo
+
+**/chat**
+
+Permite ingresar un nombre de usuario y un mensaje, se muestra en tiempo real a todos los clientes conectados.
 
 ## Endpoints Productos
 

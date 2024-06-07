@@ -1,11 +1,11 @@
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 
-class ProductManager {
+class ProductDaoFS {
   constructor(filename) {
     this.products = [];
     this.filename = filename;
-    this.path = `./src/managers/fs/data/${filename}.json`;
+    this.path = `./src/dao/fs/data/${filename}.json`;
   }
 
   //inicializador de archivo
@@ -32,7 +32,7 @@ class ProductManager {
   }
 
   //agregar productos, agregar id incremental a cada producto
-  async addProduct(product) {
+  async create(product) {
     try {
       await this.read();
       const verifyCode = this.products.find(
@@ -51,9 +51,12 @@ class ProductManager {
   }
 
   //devuelve todos los productos
-  async getProducts() {
+  async getAll(limit) {
     try {
       await this.read();
+      if (limit) {
+        return this.products.slice(0, limit);
+      }
       return this.products;
     } catch (error) {
       throw new Error(error);
@@ -61,7 +64,7 @@ class ProductManager {
   }
 
   //devuelve un producto por id
-  async getProductById(id) {
+  async getById(id) {
     try {
       await this.read();
       const productExist = this.products.find((product) => product.id == id);
@@ -75,7 +78,7 @@ class ProductManager {
   }
 
   //actualizar campo en producto
-  async updateProduct(id, product) {
+  async update(id, product) {
     try {
       await this.read();
       //Verificar si el codigo ya existe
@@ -99,7 +102,7 @@ class ProductManager {
   }
 
   //eliminar producto por id
-  async deleteProduct(id) {
+  async remove(id) {
     try {
       await this.read();
       const index = this.products.findIndex((product) => product.id == id);
@@ -115,4 +118,4 @@ class ProductManager {
   }
 }
 
-export default ProductManager;
+export default ProductDaoFS;

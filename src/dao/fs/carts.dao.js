@@ -1,11 +1,11 @@
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 
-class CartManager {
+class CartDaoFS {
   constructor(filename) {
     this.carts = [];
     this.filename = filename;
-    this.path = `./src/managers/fs/data/${filename}.json`;
+    this.path = `./src/dao/fs/data/${filename}.json`;
   }
 
   //inicializador de archivo
@@ -30,7 +30,7 @@ class CartManager {
     }
   }
 
-  async newCart() {
+  async create() {
     try {
       await this.read();
       const newCart = { id: uuidv4(), products: [] };
@@ -43,7 +43,7 @@ class CartManager {
   }
 
   //devuelve todos los productos
-  async getCarts() {
+  async getAll() {
     try {
       await this.read();
       return this.carts;
@@ -53,7 +53,7 @@ class CartManager {
   }
 
   //devuelve los productos cargados en un carrito por id
-  async getCartById(id) {
+  async getById(id) {
     try {
       await this.read();
       const cartExists = this.carts.find((cart) => cart.id == id);
@@ -67,7 +67,7 @@ class CartManager {
   }
 
   //Agregar o sumar productos a un carrito por id
-  async addProductsToCart(cid, pid, quantity = 1) {
+  async addProductsToCart(cid, pid, quantity) {
     try {
       await this.read();
       //buscar carrito
@@ -115,7 +115,7 @@ class CartManager {
   }
 
   //Borrar carrito
-  async deleteCart(cid) {
+  async remove(cid) {
     try {
       await this.read();
       const cartIndex = this.carts.findIndex((cart) => cart.id === cid);
@@ -131,4 +131,4 @@ class CartManager {
   }
 }
 
-export default CartManager;
+export default CartDaoFS;
