@@ -4,9 +4,9 @@
 import ProductsDaoMongo from "../dao/mongo/products.dao.js";
 const productsDao = new ProductsDaoMongo();
 
-export const getAll = async (limit) => {
+export const getAll = async (pagination, page, limit, sort, query) => {
   try {
-    return await productsDao.getAll(limit);
+    return await productsDao.getAll(pagination, page, limit, sort, query);
   } catch (error) {
     throw new Error(error);
   }

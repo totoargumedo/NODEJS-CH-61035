@@ -48,7 +48,7 @@ export const remove = async (req, res, next) => {
 export const addProductsToCart = async (req, res, next) => {
   try {
     const { cid, pid } = req.params;
-    const { quantity } = req.query;
+    const { quantity } = req.body;
     const cartUpdated = await cartsServices.addProductsToCart(
       cid,
       pid,
@@ -76,6 +76,19 @@ export const removeProductsInCart = async (req, res, next) => {
       return res.status(400).json({ status: "error", data: cartUpdated.error });
     }
     return res.status(201).json({ status: "success", data: cartUpdated });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const cleanCart = async (req, res, next) => {
+  try {
+    const { cid } = req.params;
+    const cartUpdated = await cartsServices.cleanCart(cid);
+    if (cartUpdated.error) {
+      return res.status(400).json({ status: "error", data: cartUpdated.error });
+    }
+    return res.status(200).json({ status: "success", data: cartUpdated });
   } catch (error) {
     next(error);
   }

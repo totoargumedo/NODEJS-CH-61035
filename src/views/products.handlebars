@@ -1,7 +1,7 @@
-<div class="d-flex flex-wrap align-items-center justify-content-evenly">
+<div class="d-flex flex-wrap align-items-center justify-content-around">
   {{#if products.length}}
     {{#each products}}
-      <div class="card text-bg-dark mb-3" style="max-width: 540px;">
+      <div class="card text-bg-dark mb-3" style="width: 400px;height:240px;">
         
         <img {{#with this.thumbnails}}
               src='{{this.[0]}}'
@@ -12,12 +12,15 @@
           <p class="card-text"><small>{{category}}</small></p>
           {{#if _id}}
           <a href="/products/{{_id}}" class="btn btn-success" tabindex="-1" role="button" aria-disabled="true">Más</a>
+          <a id="{{_id}}" onclick="addProductToCart(this)" class="btn btn-success" tabindex="-1" role="button" aria-disabled="true">Agregar al carrito</a>
           {{else}}
           <a href="/products/{{id}}" class="btn btn-success" tabindex="-1" role="button" aria-disabled="true">Más</a>
+          <a id="{{id}}" onclick="addProductToCart(this)" class="btn btn-success" tabindex="-1" role="button" aria-disabled="true">Agregar al carrito</a>
           {{/if}}
         </div>
       </div>
     {{/each}}
+
   {{else}}
     <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
       <h2>No hay productos</h2>
@@ -26,3 +29,24 @@
     </div>
   {{/if}}
 </div>
+{{#if renderPagination}}
+<nav aria-label="Page navigation example" >
+      <ul class="pagination justify-content-center ">
+        <li class="page-item  {{#if hasPrevPage}}{{^}}disabled{{/if}}">
+          <a class="page-link" href="{{prevPageLink}}">Anterior</a>
+        </li>
+        {{#each totalPages}}
+          <li class="page-item"><a class="page-link" href="/products?page={{this}}">{{this}}</a></li>
+        {{/each}}
+        <li class="page-item {{#if hasNextPage}}{{^}}disabled{{/if}}">
+          <a class="page-link" href="{{nextPageLink}}">Siguiente</a>
+        </li>
+      </ul>
+    </nav>
+    {{/if}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/toastify-js"
+></script>
+<script src="/js/products.js" charset="utf-8"></script>

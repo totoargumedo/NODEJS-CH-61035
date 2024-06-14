@@ -2,10 +2,46 @@ import * as productsServices from "../services/products.services.js";
 
 export const getAll = async (req, res, next) => {
   try {
-    const { limit } = req.query || null;
-    console.log(limit);
-    const productsAll = await productsServices.getAll(limit);
-    return res.status(200).json({ status: "success", data: productsAll });
+    //recibe title, code, category como opciones de busqueda, prioriza en ese orden en caso se envie mas de una
+    const { page, limit, sort, title, code, category, status } =
+      req.query || null;
+    const query = title
+      ? { title: new RegExp(title, "i") }
+      : code
+      ? { code: new RegExp(code, "i") }
+      : category
+      ? { category: new RegExp(category, "i") }
+      : status
+      ? { status: status }
+      : null;
+    const productsAll = await productsServices.getAll(
+      true,
+      page,
+      limit,
+      sort,
+      query
+    );
+    //En caso de que se realice un request con limite especifico, se agrega a la url de paginacion
+    const limitChecked = limit ? `limit=${limit}` : "";
+    //Creamos los links de paginacion
+    const prevPage = productsAll.hasPrevPage
+      ? `http://localhost:8080/api/products?page=${productsAll.prevPage}&${limitChecked}`
+      : null;
+    const nextPage = productsAll.hasNextPage
+      ? `http://localhost:8080/api/products?page=${productsAll.nextPage}&${limitChecked}`
+      : null;
+    return res.status(200).json({
+      status: "success",
+      totalPages: productsAll.totalPages,
+      page: productsAll.page,
+      hasPrevPage: productsAll.hasPrevPage,
+      prevPage: productsAll.prevPage,
+      prevLink: prevPage,
+      hasNextPage: productsAll.hasNextPage,
+      nextPage: productsAll.nextPage,
+      nextLink: nextPage,
+      payload: productsAll.docs,
+    });
   } catch (error) {
     next(error);
   }

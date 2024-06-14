@@ -10,6 +10,7 @@
 - Motor de plantillas y Websocket
 - DAOs, Persistencia en Mongo, chat Websockets y separación de responsabilidades
 - Mejoras en los endpoints y pantallas
+- Pantallas de carrito
 
 ## Servidor
 
@@ -32,6 +33,10 @@ Muestra una pequeña bienvenida
 
 Muestra todos los productos cargados en persistencia
 
+**/products/:pid**
+
+Muestra el producto en detalle
+
 ### Carga de productos
 
 **/products/realtimeproducts**
@@ -39,6 +44,12 @@ Muestra todos los productos cargados en persistencia
 Muestra una lista de los productos cargados y un formulario para carga de nuevos productos.
 Esta vista trabaja con Websockets para actualizar en tiempo real el listado de productos.
 También avisa si se agregaron productos nuevos o se eliminaron.
+
+### Carrito
+
+**/carts/:cid**
+
+Muestra todos los productos cargados en en el carrito con id pasado por parametros. Permite agregar cantidades, limpiar carrito y quitar productos.
 
 ### Chat en vivo
 
@@ -145,6 +156,10 @@ Elimina la cantidad esecificada en **quantity** del _objeto_ del array de produc
 Devuelve el carrito actualizado con el _id_ especificado como parametro
 Elimina la cantidad especificada (o 1 por defecto) del producto con _id_ 14 del carrito con _id_ **4**
 _Si la cantidad enviada es mayor a la existente el producto se elimina. Cantidad es igual a 1 por defecto_
+
+**/api/carts/:cid/clean**
+**/api/carts/4/clean**
+Recibe por parametro el _id_ de un carrito y elimina todos los productos que tiene cargados.
 
 ## ProductManager
 

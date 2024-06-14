@@ -13,12 +13,15 @@ cartsRouter.post("/", cartsControllers.create);
 cartsRouter.get("/:cid", cartsControllers.getById);
 
 //Agregar productos a un carrito
-cartsRouter.post("/:cid/product/:pid", cartsControllers.addProductsToCart);
+cartsRouter.put("/:cid/product/:pid", cartsControllers.addProductsToCart);
 
 //Eliminar productos de un carrito
 cartsRouter.delete("/:cid/product/:pid", cartsControllers.removeProductsInCart);
 
 //Eliminar carrito
 cartsRouter.delete("/:cid", cartsControllers.remove);
+
+//Limpiar carito
+cartsRouter.delete("/:cid/clean", cartsControllers.cleanCart);
 
 export default cartsRouter;

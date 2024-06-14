@@ -8,8 +8,8 @@ socket.on("productsAll", (data) => {
 function renderProducts(products) {
   const table = document.querySelector("tbody");
   table.innerHTML = "";
-  products.reverse();
-  products.forEach((product) => {
+  products.docs.reverse();
+  products.docs.forEach((product) => {
     let newRow = document.createElement("tr");
     let statusColor;
     let statusText;
@@ -128,6 +128,7 @@ productForm.addEventListener("submit", async (e) => {
   const price = document.getElementById("price").valueAsNumber;
   const stock = document.getElementById("stock").valueAsNumber;
   const category = document.getElementById("category").value;
+  console.log(category);
   const thumbnails = [];
   for (let i = 0; i < thumbnailsCount; i++) {
     let thumbnail = document.getElementById(`thumbnails${i + 1}`).value;

@@ -10,12 +10,20 @@
       <p class="card-text">{{productOne.description}}</p>
       <p class="card-text"><small>{{productOne.category}}</small></p>
       <a
-        href="/cart"
+        id="{{productOne._id}}"
+        onclick="addProductToCart(this)"
         class="btn btn-success"
         tabindex="-1"
         role="button"
         aria-disabled="true"
-      >Comprar</a>
+      >Agregar al carrito</a>
     </div>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/toastify-js"
+></script>
+<script src="/js/product.js" charset="utf-8"></script>

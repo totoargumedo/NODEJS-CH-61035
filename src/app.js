@@ -50,16 +50,16 @@ socketServer.on("connection", async (socket) => {
   console.log("🟢 New connection: " + socket.id);
 
   //Products sockets
-  socketServer.emit("productsAll", await productsServices.getAll());
+  socketServer.emit("productsAll", await productsServices.getAll(false));
 
   socket.on("newProduct", async (data) => {
     socket.broadcast.emit("newProductToast", data);
-    socketServer.emit("productsAll", await productsServices.getAll());
+    socketServer.emit("productsAll", await productsServices.getAll(false));
   });
 
   socket.on("productDeleted", async (data) => {
     socket.broadcast.emit("productDeletedToast", data);
-    socketServer.emit("productsAll", await productsServices.getAll());
+    socketServer.emit("productsAll", await productsServices.getAll(false));
   });
 
   //Messages sockets

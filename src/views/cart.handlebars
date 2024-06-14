@@ -1,0 +1,65 @@
+ <div class="container m-5">
+    <div class="row  mt-5 row-cols-1 bg-white border rounded shadow-sm" >
+      <div class="col col-lg-9" style="max-height:400px;overflow:scroll;scrollbar-width:thin;" >
+          
+        {{!-- Tarjeta de producto --}}
+        {{#each products}}
+        <div class="product row align-items-center my-2">
+          <div class="col-3">
+            <img
+              {{#with this.thumbnails}}
+              src='{{this.[0]}}'
+            {{/with }}
+              alt="{{this.title}}" class="img-fluid" style="max-height: 200px;">
+          </div>
+          <div class="col-4">
+            <h3 class="text-primary">{{this.title}}</h3>
+            <h6 class="text-secondary">{{this.code}}</h6>
+          </div>
+          <div class="row col-md-5 text-center align-items-center ">
+            <div class="col-4">
+              <h6>Cantidad:</h6>
+              <div class="d-flex justify-content-center align-items-center">
+                <button  id="{{this._id}}" onclick="removeQuantity(this)" class="btn btn-outline-dark p-2 h5">-</button>
+                <p class="p-2 h5">{{this.quantity}}</p>
+                <button id="{{this._id}}" onclick="addQuantity(this)" class="btn btn-outline-dark p-2 h5">+</button>
+              </div>
+            </div>
+            <div class="row col-8 mt-2">
+              <p class="display-7 p-2 pt-4 col-9">$ {{this.productTotal}}</p>
+              <button id="{{this._id}}" onclick="removeProductInCart(this,{{this.quantity}})" class="btn col-3">❌</button>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+
+      </div>
+      <div class="col col-lg-3 summary " style="background-color: #f7fbff; border-top: 3px solid #5ea4f3">
+        <h2 class="h4 text-center mt-5">Resumen</h2>
+        <table class="table  mt-3" style="background-color: #f7fbff;">
+          <tbody>
+            <tr>
+              <td class="bg-transparent ">Subtotal</td>
+              <td class="text-end">$ {{total}}</td>
+            </tr>
+            <tr>
+              <td>Descuento</td>
+              <td class="text-end">$0</td>
+            </tr>
+            <tr>
+              <td>Envío</td>
+              <td class="text-end">$0</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>Total</td>
+              <td class="text-end">$ {{total}}</td>
+            </tr>
+          </tfoot>
+        </table>
+        <a href="#" class="btn btn-outline-dark w-100 ">Comprar</a>
+      </div>
+    </div>
+    <button onclick="clearCart()" class="btn btn-outline-success" style="position: fixed;bottom:20px;right:20px;">Vaciar carrito</button>
+    <script src="/js/cart.js"></script>
