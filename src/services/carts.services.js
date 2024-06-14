@@ -93,3 +93,12 @@ export const removeProductsInCart = async (cid, pid, quantity = 1) => {
     throw new Error(error);
   }
 };
+export const cleanCart = async (cid) => {
+  try {
+    const cart = await cartsDao.cleanCart(cid);
+    if (!cart) return cart;
+    return cart;
+  } catch (error) {
+    throw new Error(error);
+  }
+};

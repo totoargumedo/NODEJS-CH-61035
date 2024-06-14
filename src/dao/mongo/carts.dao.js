@@ -21,8 +21,23 @@ export default class CartDaoMongo {
 
   async getById(id) {
     try {
-      const cart = await CartModel.findById(id).lean();
-      return cart;
+      const cart = await CartModel.findById(id)
+        .populate("products.product_id")
+        .lean();
+      const cartFlatten = {
+        _id: cart._id,
+        products: cart.products.map((prod) => {
+          return {
+            ...prod.product_id,
+            quantity: prod.quantity,
+            productTotal: prod.product_id.price * prod.quantity,
+          };
+        }),
+        cartTotal: cart.products.reduce((acc, prod) => {
+          return acc + prod.product_id.price * prod.quantity;
+        }, 0),
+      };
+      return cartFlatten;
     } catch (error) {
       throw new Error(error);
     }
@@ -82,6 +97,20 @@ export default class CartDaoMongo {
       }
       await cart.save();
       return { cart, quantityInCart };
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async cleanCart(id) {
+    try {
+      const cart = await CartModel.findById(id);
+      if (!cart) {
+        return { error: "Cart not found" };
+      }
+      cart.products = [];
+      await cart.save();
+      return cart;
     } catch (error) {
       throw new Error(error);
     }
