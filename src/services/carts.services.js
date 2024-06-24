@@ -70,6 +70,46 @@ export const addProductsToCart = async (cid, pid, quantity = 1) => {
   }
 };
 
+export const addManyProductsToCart = async (cid, products) => {
+  try {
+    //revisamos que existan los productos y tengan el stock suficiente
+    const productsAll = await productsDao.getAll();
+    const productError = {};
+    const productsExists = products.forEach((prod) => {
+      const product = productsAll.docs.find((p) => p._id == prod.product_id);
+      if (!product) {
+        productError.error = "Product not found or not enough stock";
+        return false;
+      }
+      if (product.stock < prod.quantity) {
+        productError.error = "Not enough stock";
+        return false;
+      }
+    });
+    if (!productsExists) {
+      return productError;
+    }
+    //Agregamos los productos al carrito
+    const cartUpdated = await cartsDao.addManyProductsToCart(cid, products);
+    // Si devuelve error por no encontrarlo o lo que sea, lo devuelvo
+    if (!cartUpdated) {
+      return cartUpdated;
+    }
+    //caso contrario modifico el stock del producto y devuelvo el carrito
+    const productsUpdated = await products.forEach((prod) => {
+      const updated = productsDao.update(prod.product_id, {
+        $inc: { stock: -prod.quantity },
+      });
+      if (!updated) {
+        return updated;
+      }
+    });
+    return cartUpdated;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 export const removeProductsInCart = async (cid, pid, quantity = 1) => {
   try {
     //revisamos que exista el producto

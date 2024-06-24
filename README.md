@@ -129,6 +129,16 @@ Crea un carrito, le asigna un id automatico y los guarda en memoria con los sigu
 _id_: String,
 _products_: Array de productos vacío,
 
+**/api/carts/:cid/products**
+**/api/carts/4/products**
+
+ARecive un _array_ de productos y los agrega al carrito especificado por _id_ en los parametros, cada producto es un _object_ con los siguientes campos:
+_product_id_: String,
+_quantity_: Number (1 por defecto)
+
+Devuelve el carrito actualizado con el _id_ especificado como parametro
+Devuelve error si no encuentra alguno de los productos o dichos productos no cuentan con suficiente stock
+
 **/api/carts/:cid/product/:pid**
 **/api/carts/4/product/14**
 **/api/carts/4/product/14?quantity=13**

@@ -5,6 +5,12 @@ export const getAll = async (req, res, next) => {
     //recibe title, code, category como opciones de busqueda, prioriza en ese orden en caso se envie mas de una
     const { page, limit, sort, title, code, category, status } =
       req.query || null;
+    //Validamos que los parametros de paginacion sean numeros
+    if (isNaN(page) || isNaN(limit) || page < 1 || limit < 1) {
+      return res
+        .status(400)
+        .json({ status: "error", data: "Invalid page or limit" });
+    }
     const query = title
       ? { title: new RegExp(title, "i") }
       : code
@@ -14,6 +20,7 @@ export const getAll = async (req, res, next) => {
       : status
       ? { status: status }
       : null;
+    //Obtenemos todos los productos
     const productsAll = await productsServices.getAll(
       true,
       page,

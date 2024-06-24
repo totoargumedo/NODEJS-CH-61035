@@ -10,6 +10,7 @@ import { notFoundHandler } from "./middlewares/notFound.handler.js";
 import { Server } from "socket.io";
 import * as productsServices from "./services/products.services.js";
 import * as messagesServices from "./services/messages.services.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -18,6 +19,7 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+app.use(cookieParser(process.env.SECRET_COOKIE));
 
 //ROUTERS
 app.use(express.static(__dirname + "/public"));

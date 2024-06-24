@@ -73,6 +73,32 @@ export default class CartDaoMongo {
     }
   }
 
+  async addManyProductsToCart(cid, products) {
+    try {
+      const cart = await CartModel.findById(cid);
+      if (!cart) {
+        return { error: "Cart not found" };
+      }
+      const productsToCart = products.forEach((prod) => {
+        const productExists = cart.products.find(
+          (product) => product.product_id == prod.product_id
+        );
+        if (!productExists) {
+          cart.products.push({
+            product_id: prod.product_id,
+            quantity: Number(prod.quantity),
+          });
+        } else {
+          productExists.quantity += Number(prod.quantity);
+        }
+      });
+      await cart.save();
+      return cart;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
   async removeProductsInCart(cid, pid, quantity) {
     try {
       const cart = await CartModel.findById(cid);
