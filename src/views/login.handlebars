@@ -1,16 +1,16 @@
 <div
-  class="d-flex flex-column justify-content-start align-items-center gap-5"
+  class="d-flex flex-column justify-content-center align-items-center gap-5"
   style="height:100vh;"
 >
   {{#if user}}
     <div
     class="container-fluid d-flex flex-wrap justify-content-center align-items-center"
   >
-    <img  src="/assets/logo.png" alt="" width="72" height="72" />
+    <img class="m-4" src="/assets/logo.png" alt="" width="72" height="72" />
       <h1 class="h3 mb-3 font-weight-normal">Hutt Commerce</h1>
   </div>  
     <div
-    class="container-fluid d-flex flex-nowrap justify-content-evenly align-items-center"
+    class="container-fluid d-flex flex-wrap justify-content-evenly align-items-center gap-5"
   >
     {{#each products}}
       <div class="card text-bg-dark m-3" style="height: 30vh;width:30vw;">
@@ -38,7 +38,9 @@
       method="POST"
       class="form-signin bg-dark p-5 text-light d-flex flex-column gap-3 justify-content-center align-items-center rounded-5"
     >
-      <img class="mx-3" src="/assets/logo.png" alt="" width="100" height="100" />
+      <img class="mb-4" src="/assets/logo.png" alt="" width="72" height="72" />
+      <h1 class="h3 mb-3 font-weight-normal">Ingresar</h1>
+     
       <label for="inputEmail" class="sr-only">Dirección de correo</label>
       <input
         type="email"
@@ -60,7 +62,6 @@
         class="btn btn-lg btn-outline-light btn-block"
         type="submit"
       >Ingresar</button>
-       
        <a
         class="btn btn-lg btn-outline-light btn-block"
         href="/api/users/register-github"

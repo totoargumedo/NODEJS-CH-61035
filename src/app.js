@@ -11,6 +11,8 @@ import { Server } from "socket.io";
 import * as productsServices from "./services/products.services.js";
 import * as messagesServices from "./services/messages.services.js";
 import cookieParser from "cookie-parser";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -19,7 +21,21 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
-app.use(cookieParser(process.env.SECRET_COOKIE));
+
+//Cookies and sessions
+const storeConfig = {
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_CONNECTION_URI,
+    crypto: { secret: process.env.SECRET_KEY },
+    ttl: 600,
+  }),
+  secret: process.env.SECRET_KEY,
+  resave: true,
+  saveUninitialized: true,
+  cookie: { maxAge: 600000, signed: true },
+};
+app.use(cookieParser(process.env.SECRET_KEY));
+app.use(session(storeConfig));
 
 //ROUTERS
 app.use(express.static(__dirname + "/public"));

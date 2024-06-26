@@ -10,6 +10,8 @@ cartsRouter.get("/:cid", async (req, res, next) => {
     res.render("cart", {
       products: cartOne.products,
       total: cartOne.cartTotal,
+
+      user: req.session.user,
     });
   } catch (error) {
     next(error);

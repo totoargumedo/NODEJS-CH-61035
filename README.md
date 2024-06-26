@@ -1,6 +1,6 @@
 # PRACTICAS BACKEND MERN CODERHOUSE
 
-# Desafío 7
+# Desafío 8
 
 - Clases ECMAScript y ECMAScript avanzado
 - Manejo de archivos
@@ -11,6 +11,7 @@
 - DAOs, Persistencia en Mongo, chat Websockets y separación de responsabilidades
 - Mejoras en los endpoints y pantallas
 - Pantallas de carrito
+- CRUD simple de usuario, sessiones y pantallas de login y registro
 
 ## Servidor
 
@@ -25,7 +26,7 @@ npm run start
 ### Home
 
 **/**
-Muestra una pequeña bienvenida
+Muestra una pequeña bienvenida con login de usuario **obligado**
 
 ### Productos
 
@@ -107,6 +108,36 @@ _category_: String,
 **/api/products/:pid**
 **/api/products/4**
 Recibe por parametro el _id_ de un producto y lo elimina de la memoria.
+
+## Endpoints Usuarios
+
+### POST
+
+**/api/users/register**
+Recibe por body un _objeto_ con los siguientes campos, y crea un usuario nuevo en la base de datos.
+first_name: String (obligatorio),
+last_name: String (obligatorio),
+age: Number (obligatorio),
+password: String (obligatorio),
+email: String (obligatorio, único),
+
+En caso de que el email ingresado ya exista en otro usuario devolvera error
+
+**/api/users/login**
+Recibe por body un _objeto_ con los siguientes campos, y adjunta los siguientes datos del usuario a la session.
+first_name
+last_name
+age
+email
+role
+
+En caso de que el email o la contraseña ingresados no existan devolvera error
+
+### GET
+
+**/api/users/logout**
+
+Destruye la session de usuario activo
 
 ## Endpoints Carritos
 
