@@ -12,6 +12,9 @@ cartsRouter.post("/", cartsControllers.create);
 //Devuelve producto por id
 cartsRouter.get("/:cid", cartsControllers.getById);
 
+//Agregar grupo de productos por body a un carrito
+cartsRouter.post("/:cid/products", cartsControllers.addManyProductsToCart);
+
 //Agregar productos a un carrito
 cartsRouter.put("/:cid/product/:pid", cartsControllers.addProductsToCart);
 

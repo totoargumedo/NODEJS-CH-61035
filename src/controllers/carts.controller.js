@@ -63,6 +63,23 @@ export const addProductsToCart = async (req, res, next) => {
   }
 };
 
+export const addManyProductsToCart = async (req, res, next) => {
+  try {
+    const { cid } = req.params;
+    const products = req.body;
+    const cartUpdated = await cartsServices.addManyProductsToCart(
+      cid,
+      products
+    );
+    if (cartUpdated.error) {
+      return res.status(400).json({ status: "error", data: cartUpdated.error });
+    }
+    return res.status(201).json({ status: "success", data: cartUpdated });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const removeProductsInCart = async (req, res, next) => {
   try {
     const { cid, pid } = req.params;

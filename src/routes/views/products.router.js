@@ -36,6 +36,7 @@ productRouter.get("/", async (req, res, next) => {
       hasNextPage: productsAll.hasNextPage,
       prevPageLink: prevPageLink,
       nextPageLink: nextPageLink,
+      user: req.session.user,
     });
   } catch (error) {
     next(error);
@@ -44,7 +45,9 @@ productRouter.get("/", async (req, res, next) => {
 
 productRouter.get("/realtimeproducts", async (req, res, next) => {
   try {
-    res.render("realtimeproducts");
+    res.render("realtimeproducts", {
+      user: req.session.user,
+    });
   } catch (error) {
     next(error);
   }
@@ -54,7 +57,7 @@ productRouter.get("/:pid", async (req, res, next) => {
   try {
     const { pid } = req.params;
     const productOne = await productsServices.getById(pid);
-    res.render("product", { productOne });
+    res.render("product", { productOne, user: req.session.user });
   } catch (error) {
     next(error);
   }

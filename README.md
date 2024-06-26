@@ -1,6 +1,6 @@
 # PRACTICAS BACKEND MERN CODERHOUSE
 
-# Desafío 7
+# Desafío 8
 
 - Clases ECMAScript y ECMAScript avanzado
 - Manejo de archivos
@@ -11,6 +11,7 @@
 - DAOs, Persistencia en Mongo, chat Websockets y separación de responsabilidades
 - Mejoras en los endpoints y pantallas
 - Pantallas de carrito
+- CRUD simple de usuario, sessiones y pantallas de login y registro
 
 ## Servidor
 
@@ -25,7 +26,7 @@ npm run start
 ### Home
 
 **/**
-Muestra una pequeña bienvenida
+Muestra una pequeña bienvenida con login de usuario **obligado**
 
 ### Productos
 
@@ -108,6 +109,36 @@ _category_: String,
 **/api/products/4**
 Recibe por parametro el _id_ de un producto y lo elimina de la memoria.
 
+## Endpoints Usuarios
+
+### POST
+
+**/api/users/register**
+Recibe por body un _objeto_ con los siguientes campos, y crea un usuario nuevo en la base de datos.
+first_name: String (obligatorio),
+last_name: String (obligatorio),
+age: Number (obligatorio),
+password: String (obligatorio),
+email: String (obligatorio, único),
+
+En caso de que el email ingresado ya exista en otro usuario devolvera error
+
+**/api/users/login**
+Recibe por body un _objeto_ con los siguientes campos, y adjunta los siguientes datos del usuario a la session.
+first_name
+last_name
+age
+email
+role
+
+En caso de que el email o la contraseña ingresados no existan devolvera error
+
+### GET
+
+**/api/users/logout**
+
+Destruye la session de usuario activo
+
 ## Endpoints Carritos
 
 ### GET
@@ -128,6 +159,16 @@ Devuelve el carrito con _id_ **4**
 Crea un carrito, le asigna un id automatico y los guarda en memoria con los siguientes campos,
 _id_: String,
 _products_: Array de productos vacío,
+
+**/api/carts/:cid/products**
+**/api/carts/4/products**
+
+ARecive un _array_ de productos y los agrega al carrito especificado por _id_ en los parametros, cada producto es un _object_ con los siguientes campos:
+_product_id_: String,
+_quantity_: Number (1 por defecto)
+
+Devuelve el carrito actualizado con el _id_ especificado como parametro
+Devuelve error si no encuentra alguno de los productos o dichos productos no cuentan con suficiente stock
 
 **/api/carts/:cid/product/:pid**
 **/api/carts/4/product/14**
